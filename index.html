@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Silver Jubilee - Manjit & Harpreet</title>
+    <link rel="icon" type="image/png" href="https://i.postimg.cc/4xrvxPBH/Untitled-design-(11)-(1).png">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;1,600&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* --- GLOBAL & BASE STYLES --- */
+        :root {
+            --bg-deep: #050505;
+            --text-light: #ffffff;
+            --text-dim: #a0aec0;
+            --silver: #e0e6ed;
+            --silver-dark: #b1b9c2;
+            --accent: #2c3e50;
+            --youtube-red: #ff0000;
+            --instagram-grad: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-deep);
+            color: var(--text-light);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            background: linear-gradient(120deg, #050505, #11141a, #0a0a0d);
+            background-size: 200% 200%;
+            animation: gradientMove 10s ease infinite;
+            overflow-x: hidden;
+        }
+
+        /* --- CINEMATIC PRE-LOADER STYLES --- */
+        #preloader {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: #000; z-index: 10000; display: flex; justify-content: center;
+            align-items: center; overflow: hidden; flex-direction: column;
+        }
+        .balloon {
+            position: absolute; bottom: -150px; font-size: 50px;
+            animation: balloonUp 4s ease-in forwards;
+        }
+        @keyframes balloonUp {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-120vh) rotate(20deg); opacity: 0.8; }
+        }
+        #camera-wrap {
+            position: absolute; font-size: 80px; opacity: 0;
+            transform: scale(0.5); z-index: 10001; top: 40%;
+        }
+        .camera-active { animation: cameraZoom 1.5s ease-in-out forwards; }
+        @keyframes cameraZoom {
+            0% { opacity: 0; transform: scale(0.5); }
+            50% { opacity: 1; transform: scale(1.2); }
+            80% { opacity: 1; transform: scale(1); }
+            100% { opacity: 0; transform: scale(3); }
+        }
+
+        /* Intro Welcome Text under Camera */
+        #intro-welcome {
+            position: absolute;
+            top: 55%;
+            font-size: 18px;
+            letter-spacing: 4px;
+            color: var(--silver);
+            text-transform: uppercase;
+            font-weight: 500;
+            opacity: 0;
+            z-index: 10001;
+            text-shadow: 0 0 10px rgba(255,255,255,0.5);
+        }
+        .intro-welcome-active {
+            animation: introTextReveal 1.5s ease-out forwards;
+        }
+        @keyframes introTextReveal {
+            0% { opacity: 0; transform: translateY(20px); filter: blur(5px); }
+            50% { opacity: 1; transform: translateY(0); filter: blur(0); }
+            100% { opacity: 0; transform: translateY(-10px); filter: blur(5px); } /* Fades out right as flash hits */
+        }
+
+        #flash-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: #fff; opacity: 0; z-index: 10002; pointer-events: none;
+        }
+        .flash-trigger { animation: flashAnim 0.6s ease-out; }
+        @keyframes flashAnim { 0% { opacity: 0; } 20% { opacity: 1; } 100% { opacity: 0; } }
+
+        #main-site-content { opacity: 0; transition: opacity 1s ease-in; }
+
+        @keyframes gradientMove {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* --- MAGICAL SHOWER STYLES --- */
+        .flower-container {
+            position: fixed; 
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            pointer-events: none; z-index: 9999; overflow: hidden;
+        }
+        .flower, .sparkle { position: absolute; top: -50px; user-select: none; }
+        .sparkle { color: #ffffff; }
+
+        @keyframes fall {
+            from { transform: translateY(-50px) rotate(0deg); opacity: 1; }
+            to { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+        }
+        @keyframes blink {
+            0%, 100% { opacity: 0.2; transform: scale(0.8); text-shadow: 0 0 2px #fff; }
+            50% { opacity: 1; transform: scale(1.5); text-shadow: 0 0 15px #fff, 0 0 20px var(--silver); }
+        }
+
+        /* --- PREMIUM ANIMATED APP-STYLE HEADER --- */
+        header {
+            padding: 20px 0; text-align: center; background: rgba(5, 5, 5, 0.6);
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            position: sticky; top: 0; z-index: 100;
+            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.5); overflow: hidden;
+        }
+        header::after {
+            content: ''; position: absolute; bottom: 0; left: -100%;
+            width: 100%; height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.8), transparent);
+            animation: headerSweep 3.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+        }
+        @keyframes headerSweep { 0% { left: -100%; } 50%, 100% { left: 100%; } }
+
+        .brand { 
+            font-size: 15px; letter-spacing: 4px; text-transform: uppercase; font-weight: 600; 
+            background: linear-gradient(90deg, #8a9ba8 0%, #ffffff 50%, #8a9ba8 100%);
+            background-size: 200% auto; -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent; animation: textShine 3s linear infinite;
+        }
+        .sub-brand { font-size: 10px; letter-spacing: 2px; color: var(--text-dim); margin-top: 4px; }
+
+        .main-wrapper {
+            display: grid; grid-template-columns: 1fr; gap: 30px;
+            max-width: 1400px; margin: 0 auto; padding: 40px 20px;
+            flex: 1; align-items: flex-start; width: 100%;
+        }
+
+        /* --- BANNER STYLES --- */
+        .ad-space {
+            display: flex; align-items: center; justify-content: center;
+            border-radius: 12px; overflow: hidden;
+        }
+        .banner-img {
+            width: 100%; height: auto; border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); transition: transform 0.3s ease;
+        }
+        .banner-img:hover { transform: scale(1.02); }
+        .ad-horizontal { width: 100%; max-width: 728px; margin: 10px auto 40px; }
+        .content-area { display: flex; justify-content: center; flex-direction: column; align-items: center; }
+
+        /* --- PREMIUM AURORA GLASSMORPHISM --- */
+        .glass-panel {
+            position: relative; background: rgba(15, 15, 20, 0.55);
+            backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-top: 1px solid rgba(255, 255, 255, 0.15);
+            border-left: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 24px; padding: 50px 30px; text-align: center;
+            width: 100%; max-width: 650px; 
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.7), inset 0 0 20px rgba(255, 255, 255, 0.03);
+            z-index: 5; overflow: hidden; 
+        }
+
+        .glass-panel::before, .glass-panel::after {
+            content: ''; position: absolute; border-radius: 50%;
+            filter: blur(60px); z-index: 0; pointer-events: none;
+            animation: auroraGlow 8s ease-in-out infinite alternate;
+        }
+        .glass-panel::before {
+            width: 250px; height: 250px; background: rgba(255, 255, 255, 0.08);
+            top: -100px; left: -100px;
+        }
+        .glass-panel::after {
+            width: 300px; height: 300px; background: rgba(177, 185, 194, 0.06);
+            bottom: -150px; right: -100px; animation-delay: -4s;
+        }
+        @keyframes auroraGlow {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(40px, 40px) scale(1.1); }
+        }
+
+        .glass-panel > * { position: relative; z-index: 10; }
+
+        /* --- POST-POPUP SPARKLE REVEAL FOR WELCOME TEXT --- */
+        .welcome-text {
+            position: relative; z-index: 15; font-size: 15px;
+            color: var(--silver); text-transform: uppercase;
+            letter-spacing: 5px; margin-bottom: 15px; display: block; opacity: 0; 
+            font-weight: 600;
+        }
+        .welcome-animate { 
+            /* This animation will trigger exactly when popup closes */
+            animation: sparkleTextReveal 1.5s cubic-bezier(0.25, 1, 0.5, 1) forwards; 
+        }
+        
+        @keyframes sparkleTextReveal {
+            0% { 
+                opacity: 0; transform: scale(0.5); letter-spacing: 20px; 
+                filter: blur(15px); text-shadow: 0 0 0px #fff; 
+            }
+            40% { 
+                opacity: 1; transform: scale(1.2); letter-spacing: 8px; 
+                filter: blur(0px); text-shadow: 0 0 30px #fff, 0 0 50px var(--silver); /* Huge magical glow burst */
+            }
+            100% { 
+                opacity: 1; transform: scale(1); letter-spacing: 5px; 
+                filter: blur(0); text-shadow: 0 0 8px rgba(255,255,255,0.6); /* Settles to a premium soft glow */
+            }
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif; font-size: 42px;
+            background: linear-gradient(to right, #9ca8b5 20%, #ffffff 40%, #ffffff 60%, #9ca8b5 80%);
+            background-size: 200% auto; -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent; margin-bottom: 15px;
+            line-height: 1.2; animation: textShine 4s linear infinite, glowPulse 3s ease-in-out infinite;
+            filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.1));
+        }
+        @keyframes textShine { to { background-position: 200% center; } }
+        @keyframes glowPulse {
+            0%, 100% { filter: drop-shadow(0 0 2px rgba(255, 255, 255, 0.1)); }
+            50% { filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.3)); }
+        }
+
+        .desc { font-size: 14px; color: var(--text-dim); margin-bottom: 25px; line-height: 1.6; }
+
+        .instruction-highlight {
+            background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 25px; margin-bottom: 20px; border-radius: 15px; text-align: left;
+        }
+        .highlight-title { color: var(--silver); font-weight: 600; font-size: 16px; margin-bottom: 5px; display: block; }
+        .highlight-sub { font-size: 12px; color: var(--text-dim); margin-bottom: 15px; display: block; }
+        .how-it-works { list-style: none; margin-bottom: 20px; }
+        .how-it-works li { font-size: 14px; margin-bottom: 8px; color: #efefef; display: flex; align-items: center; gap: 10px; }
+        .effortless-text { font-size: 14px; font-weight: 500; margin-bottom: 5px; color: var(--silver); }
+        .kaydee-tagline { font-size: 12px; color: var(--text-dim); margin-bottom: 15px; }
+
+        @keyframes shimmerGlow {
+            0% { opacity: 0.6; text-shadow: 0 0 5px rgba(255,255,255,0.1); }
+            50% { opacity: 1; text-shadow: 0 0 15px rgba(255,255,255,0.4); }
+            100% { opacity: 0.6; text-shadow: 0 0 5px rgba(255,255,255,0.1); }
+        }
+
+        .privacy-note {
+            background: rgba(46, 204, 113, 0.1); border: 1px solid rgba(46, 204, 113, 0.2);
+            padding: 10px; border-radius: 8px; font-size: 11px; font-weight: 600;
+            color: #2ecc71; letter-spacing: 0.5px; text-align: center;
+            animation: shimmerGlow 3s infinite ease-in-out;
+        }
+
+        .guide-box {
+            background: rgba(44, 62, 80, 0.2); border-left: 4px solid var(--silver);
+            padding: 15px 20px; border-radius: 8px; margin-bottom: 30px; text-align: left;
+        }
+        .guide-box-title { color: #fff; font-weight: 600; font-size: 14px; margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
+        .guide-box-text { color: var(--silver-dark); font-size: 13px; line-height: 1.5; }
+        .guide-box-text strong { color: #ffffff; font-weight: 500; }
+
+        /* --- BUTTON LAYOUT FIX FOR MOBILE --- */
+        .action-buttons { display: flex; flex-direction: column; gap: 20px; align-items: stretch; margin-bottom: 20px; width: 100%; }
+        .button-group { display: flex; flex-direction: column; align-items: center; gap: 8px; width: 100%; }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(224, 230, 237, 0.3); }
+            70% { box-shadow: 0 0 0 15px rgba(224, 230, 237, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(224, 230, 237, 0); }
+        }
+
+        .primary-btn {
+            display: flex; align-items: center; justify-content: center; gap: 10px;
+            background: linear-gradient(135deg, var(--silver), var(--silver-dark));
+            color: #000; font-weight: 600; font-size: 16px; padding: 16px 20px;
+            border-radius: 12px; text-decoration: none; transition: all 0.3s;
+            animation: pulse 2s infinite; width: 100%; max-width: 400px; box-sizing: border-box;
+        }
+
+        .primary-btn span:first-of-type { white-space: nowrap; }
+        .primary-btn:hover { transform: translateY(-2px); background: #fff; box-shadow: 0 10px 25px rgba(255, 255, 255, 0.2); }
+        
+        .secondary-btn {
+            display: flex; align-items: center; justify-content: center; gap: 10px;
+            background: rgba(255, 255, 255, 0.03); color: var(--silver); font-weight: 500;
+            font-size: 15px; padding: 14px 20px; border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 12px; text-decoration: none; transition: all 0.3s; 
+            width: 100%; max-width: 400px; box-sizing: border-box;
+        }
+        .secondary-btn span { white-space: nowrap; }
+        .secondary-btn:hover { background: rgba(255, 255, 255, 0.08); border-color: rgba(255, 255, 255, 0.4); }
+        .btn-desc { font-size: 12px; color: var(--text-dim); text-align: center; width: 100%; max-width: 400px; line-height: 1.4; }
+        
+        .badge-recommended { 
+            background: #27ae60; color: white; font-size: 10px; 
+            padding: 4px 8px; border-radius: 20px; text-transform: uppercase; 
+            font-weight: 600; margin-left: 5px; 
+        }
+
+        /* --- NEON SOCIAL BUTTONS CSS --- */
+        .social-section { margin-top: 40px; padding-top: 30px; border-top: 1px solid rgba(255, 255, 255, 0.05); }
+        .social-pitch { font-size: 13px; color: var(--text-dim); margin-bottom: 20px; }
+        .social-buttons { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; }
+        
+        .neon-btn {
+            display: inline-flex; align-items: center; gap: 8px; 
+            padding: 12px 25px; border-radius: 8px; text-decoration: none; 
+            font-size: 14px; font-weight: 600; letter-spacing: 1px;
+            text-transform: uppercase; transition: all 0.3s ease;
+            position: relative; overflow: hidden; background: transparent;
+        }
+
+        .neon-yt {
+            color: #fff; border: 2px solid #ff0000;
+            box-shadow: inset 0 0 10px rgba(255,0,0,0.5), 0 0 15px rgba(255,0,0,0.5);
+            text-shadow: 0 0 5px #fff, 0 0 10px #ff0000;
+        }
+        .neon-yt i { color: #ff0000; font-size: 18px; filter: drop-shadow(0 0 5px #ff0000); }
+        .neon-yt:hover {
+            background: rgba(255, 0, 0, 0.15);
+            box-shadow: inset 0 0 20px rgba(255,0,0,0.8), 0 0 30px rgba(255,0,0,0.8);
+            transform: translateY(-3px);
+        }
+
+        .neon-ig {
+            color: #fff; border: 2px solid #e1306c;
+            box-shadow: inset 0 0 10px rgba(225,48,108,0.5), 0 0 15px rgba(225,48,108,0.5);
+            text-shadow: 0 0 5px #fff, 0 0 10px #e1306c;
+        }
+        .neon-ig i { color: #e1306c; font-size: 18px; filter: drop-shadow(0 0 5px #e1306c); }
+        .neon-ig:hover {
+            background: rgba(225, 48, 108, 0.15);
+            box-shadow: inset 0 0 20px rgba(225,48,108,0.8), 0 0 30px rgba(225,48,108,0.8);
+            transform: translateY(-3px);
+        }
+
+        footer { padding: 25px; text-align: center; font-size: 12px; color: #555; background: #000; margin-top: auto; }
+
+        /* --- FULLSCREEN POPUP OVERLAY STYLES --- */
+        #fullscreen-popup {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(8px);
+            z-index: 10005; display: flex; justify-content: center; align-items: center;
+            opacity: 0; pointer-events: none; transition: opacity 0.5s ease;
+        }
+        .popup-show { opacity: 1 !important; pointer-events: auto !important; }
+        .popup-content {
+            width: 90%; max-width: 600px; transform: scale(0.8);
+            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex; flex-direction: column; border-radius: 12px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9), 0 0 30px rgba(255, 255, 255, 0.15);
+        }
+        .popup-show .popup-content { transform: scale(1); }
+        .popup-countdown-strip {
+            background: #000; color: var(--silver-dark); font-size: 13px; text-align: center;
+            padding: 8px 0; font-weight: 500; border-top-left-radius: 12px; border-top-right-radius: 12px;
+            letter-spacing: 1px; border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .popup-countdown-strip span { color: #fff; font-weight: 600; }
+        .popup-img { width: 100%; height: auto; border-bottom-left-radius: 12px; border-bottom-right-radius: 12px; display: block; }
+
+        @media (max-width: 480px) {
+            h1 { font-size: 32px; }
+            .primary-btn { font-size: 14px; padding: 14px 10px; gap: 5px; }
+            .badge-recommended { font-size: 9px; padding: 3px 5px; }
+            .social-buttons { flex-direction: column; width: 100%; align-items: center; }
+            .neon-btn { width: 100%; justify-content: center; max-width: 300px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="flower-container" id="flower-zone"></div>
+
+    <div id="fullscreen-popup">
+        <div class="popup-content">
+            <div class="popup-countdown-strip">Closing in <span id="popup-timer">7</span>s</div>
+            <img src="https://i.postimg.cc/sXyKcKFh/Perez-(4)-(1).png" alt="Promo Banner" class="popup-img">
+        </div>
+    </div>
+
+    <div id="preloader">
+        <div id="camera-wrap">📸</div>
+        <div id="intro-welcome">Welcome Guest 🙏❣️</div>
+    </div>
+    
+    <div id="flash-overlay"></div>
+
+    <div id="main-site-content">
+        <header>
+            <div class="brand">Kaydee Production</div>
+            <div class="sub-brand">x CodeSphere Federation</div>
+        </header>
+
+        <div class="main-wrapper">
+            <div class="content-area">
+                
+                <div class="ad-space ad-horizontal" style="margin: 0 auto 30px auto; z-index: 5;">
+                    <img src="https://i.postimg.cc/sXyKcKFh/Perez-(4)-(1).png" alt="Kaydee Production Banner" class="banner-img">
+                </div>
+
+                <div class="glass-panel" id="main-panel">
+                    <span class="welcome-text" id="welcome-guest">Welcome Guest 🙏❣️</span>
+                    
+                    <h1>Manjit & Harpreet's<br>Silver Jubilee ❣️</h1>
+                    <p class="desc">Experience the magic of our 25th Wedding Anniversary. We've integrated AI Face-Scanning technology to curate your captured moments 🎥 from the event.</p>
+
+                    <div class="instruction-highlight">
+                        <span class="highlight-title">🌟 Exclusive Photo Experience Powered by AI</span>
+                        <span class="highlight-sub">Kaydee Production × CodeSphere Federation present:<br>Smart Photo Discovery for Silver Jubilee Guests</span>
+                        <ul class="how-it-works">
+                            <li><span>1️⃣</span> Tap to join</li>
+                            <li><span>2️⃣</span> 🤳Snap a clear selfie</li>
+                            <li><span>3️⃣</span> ✨AI finds ALL your photos instantly</li>
+                            <li><span>4️⃣</span> 🎉View your Pics !</li>
+                        </ul>
+                        <p class="effortless-text">No searching. No waiting. Just YOUR moments. ✨</p>
+                        <p class="kaydee-tagline">Kaydee Production makes memories effortless.</p>
+                        <div class="privacy-note">NOTE - YOUR PRIVACY IS 100% SAFE AND ENCRYPTED 🔒</div>
+                    </div>
+
+                    <div class="guide-box">
+                        <div class="guide-box-title">
+                            <i class="fa-solid fa-circle-info"></i> "IMPORTANT 📢"- <strong>Navigation Guide</strong>
+                        </div>
+                        <div class="guide-box-text">
+                            Snap a selfie to instantly filter and view <strong>all your personal photos</strong>. To browse the complete collection of the entire event, please click on the <strong>'Highlights'</strong> tab located right next to the <strong>'All Photos'</strong> column.
+                        </div>
+                    </div>
+
+                    <div class="action-buttons">
+                        <div class="button-group">
+                            <a href="https://kwikpic-in.app.link/L0FAuVH4c1b?groupCode=WBPM4H" class="primary-btn" target="_blank">
+                                <i class="fa-solid fa-mobile-screen"></i>
+                                <span>View Pics via Mobile App</span>
+                                <span class="badge-recommended">Recommended</span>
+                            </a>
+                            <span class="btn-desc">👑Highest, Top & Best experience for scanning and View high-quality Full Hd Pics.</span>
+                        </div>
+                        <div class="button-group">
+                            <a href="https://kwikpic-in.app.link/e/OwFzuVH4c1b?uCode=WBPM4H" class="secondary-btn" target="_blank">
+                                <i class="fa-solid fa-globe"></i>
+                                <span>View Pics via Website</span>
+                            </a>
+                            <span class="btn-desc">Quick access directly through your Mobile browser/Website & View high-quality Pics. </span>
+                        </div>
+                    </div>
+
+                    <div class="social-section">
+                        <p class="social-pitch">Subscribe & Follow for all the coming soon exclusive videos, glimpses, and highlights from the event!</p>
+                        <div class="social-buttons">
+                            <a href="https://www.youtube.com/@kaydeeproduction2026" class="neon-btn neon-yt" target="_blank">
+                                <i class="fa-brands fa-youtube"></i> Subscribe
+                            </a>
+                            <a href="https://www.instagram.com/kaydee_production?igsh=ajBha3dtdnhrMWhr" class="neon-btn neon-ig" target="_blank">
+                                <i class="fa-brands fa-instagram"></i> Follow
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="ad-space ad-horizontal">
+            <img src="https://i.postimg.cc/SK79QrwT/Perez-(3).png" alt="Support & Subscribe Banner" class="banner-img">
+        </div>
+
+        <footer>
+            <p>&copy; <span id="year"></span> Kaydee Production & Codesphere Federation. All rights reserved.</p>
+            <p style="margin-top: 5px;">"Kaydee Production makes memories effortless."</p>
+        </footer>
+    </div>
+
+    <script>
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // --- MASTER TIMING LOGIC ---
+        window.addEventListener('load', () => {
+            const preloader = document.getElementById('preloader');
+            const camera = document.getElementById('camera-wrap');
+            const introWelcome = document.getElementById('intro-welcome');
+            const flash = document.getElementById('flash-overlay');
+            const mainContent = document.getElementById('main-site-content');
+            const welcomeGuest = document.getElementById('welcome-guest');
+            
+            const popupBanner = document.getElementById('fullscreen-popup');
+            const popupTimer = document.getElementById('popup-timer');
+
+            // 1. Create Balloons
+            const colors = ['🎈', '🎈', '🎈', '🎈', '🎈'];
+            for(let i=0; i<15; i++) {
+                setTimeout(() => {
+                    const b = document.createElement('div');
+                    b.className = 'balloon';
+                    b.innerHTML = colors[Math.floor(Math.random()*colors.length)];
+                    b.style.left = Math.random() * 100 + '%';
+                    b.style.fontSize = (Math.random() * 30 + 40) + 'px';
+                    preloader.appendChild(b);
+                }, i * 150);
+            }
+
+            // 2. TIMING: 2.0s -> Show Camera & Intro Welcome Text
+            setTimeout(() => {
+                camera.classList.add('camera-active');
+                introWelcome.classList.add('intro-welcome-active');
+            }, 2000);
+
+            // 3. TIMING: 3.5s -> Flash hits, reveal site, and trigger 7s Fullscreen Popup
+            setTimeout(() => {
+                flash.classList.add('flash-trigger');
+                preloader.style.display = 'none';
+                mainContent.style.opacity = '1';
+                
+                // Show Fullscreen Popup right after flash (400ms delay for smoothness)
+                setTimeout(() => {
+                    popupBanner.classList.add('popup-show');
+                    
+                    let timeLeft = 7;
+                    const countdown = setInterval(() => {
+                        timeLeft--;
+                        popupTimer.textContent = timeLeft;
+                        
+                        // 4. TIMING: Popup closes
+                        if(timeLeft <= 0) {
+                            clearInterval(countdown);
+                            popupBanner.classList.remove('popup-show'); 
+                            
+                            // 5. TIMING: EXACTLY when popup hides, explode the "Welcome Guest" sparkle! ✨
+                            setTimeout(() => {
+                                popupBanner.remove(); 
+                                document.body.style.overflow = 'auto'; 
+                                
+                                // TRIGGER SPARKLE TEXT REVEAL HERE
+                                welcomeGuest.classList.add('welcome-animate');
+                                
+                            }, 500); // 500ms allows popup to fade out before triggering the sparkle
+                        }
+                    }, 1000);
+                }, 400); 
+
+            }, 3500);
+        });
+
+        // MAGICAL FLOWER & SPARKLE SHOWERING SCRIPT
+        const flowerZone = document.getElementById('flower-zone');
+        const flowers = ['🌸', '🌹', '🌷', '🏵️'];
+        const sparkles = ['✨', '✦', '⭐', '·'];
+
+        function createMagicalDrop() {
+            const el = document.createElement('div');
+            const isSparkle = Math.random() > 0.5; 
+            
+            el.className = isSparkle ? 'sparkle' : 'flower';
+            
+            if(isSparkle) {
+                el.innerHTML = sparkles[Math.floor(Math.random() * sparkles.length)];
+                el.style.fontSize = Math.random() * 8 + 8 + 'px'; 
+                const fallDuration = Math.random() * 4 + 6; 
+                const blinkDuration = Math.random() * 1 + 0.8; 
+                el.style.animation = `fall ${fallDuration}s linear forwards, blink ${blinkDuration}s ease-in-out infinite`;
+                flowerZone.appendChild(el);
+                setTimeout(() => { el.remove(); }, fallDuration * 1000);
+            } else {
+                el.innerHTML = flowers[Math.floor(Math.random() * flowers.length)];
+                el.style.fontSize = Math.random() * 10 + 12 + 'px'; 
+                const fallDuration = Math.random() * 4 + 6;
+                el.style.animation = `fall ${fallDuration}s linear forwards`;
+                flowerZone.appendChild(el);
+                setTimeout(() => { el.remove(); }, fallDuration * 1000);
+            }
+            el.style.left = Math.random() * 100 + '%';
+        }
+        
+        setInterval(createMagicalDrop, 250); 
+    </script>
+</body>
+</html>
