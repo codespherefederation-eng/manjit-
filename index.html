@@ -2,11 +2,11 @@
 <html lang="en">
 <head>
     <meta name="google-site-verification" content="N6NGMaWJ12D8Iu3Om61_QiJwVy8tiJ9Naf1AoAefFj4" />
-        <meta charset="UTF-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kaydee Production | Smart AI Photo Gallery</title>
-<meta name="description" content="Kaydee Production x CodeSphere Federation. Premium cinematic event highlights and Smart AI Photo Discovery.">
-<meta name="keywords" content="Kaydee Production, CodeSphere Federation, AI Photo Gallery, Event Photography">
+    <meta name="description" content="Kaydee Production x CodeSphere Federation. Premium cinematic event highlights and Smart AI Photo Discovery.">
+    <meta name="keywords" content="Kaydee Production, CodeSphere Federation, AI Photo Gallery, Event Photography">
     <link rel="icon" type="image/png" href="https://i.postimg.cc/4xrvxPBH/Untitled-design-(11)-(1).png">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;1,600&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -21,7 +21,6 @@
             --silver-dark: #b1b9c2;
             --accent: #2c3e50;
             --youtube-red: #ff0000;
-            --instagram-grad: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
         }
 
         * {
@@ -43,79 +42,95 @@
             overflow-x: hidden;
         }
 
-        /* --- CINEMATIC PRE-LOADER STYLES --- */
-        #preloader {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: #000; z-index: 10000; display: flex; justify-content: center;
-            align-items: center; overflow: hidden; flex-direction: column;
-        }
-        .balloon {
-            position: absolute; bottom: -150px; font-size: 50px;
-            animation: balloonUp 4s ease-in forwards;
-        }
-        @keyframes balloonUp {
-            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
-            100% { transform: translateY(-120vh) rotate(20deg); opacity: 0.8; }
-        }
-        #camera-wrap {
-            position: absolute; font-size: 80px; opacity: 0;
-            transform: scale(0.5); z-index: 10001; top: 40%;
-        }
-        .camera-active { animation: cameraZoom 1.5s ease-in-out forwards; }
-        @keyframes cameraZoom {
-            0% { opacity: 0; transform: scale(0.5); }
-            50% { opacity: 1; transform: scale(1.2); }
-            80% { opacity: 1; transform: scale(1); }
-            100% { opacity: 0; transform: scale(3); }
-        }
-
-        /* Intro Welcome Text under Camera */
-        #intro-welcome {
-            position: absolute;
-            top: 55%;
-            font-size: 18px;
-            letter-spacing: 4px;
-            color: var(--silver);
-            text-transform: uppercase;
-            font-weight: 500;
-            opacity: 0;
-            z-index: 10001;
-            text-shadow: 0 0 10px rgba(255,255,255,0.5);
-        }
-        .intro-welcome-active {
-            animation: introTextReveal 1.5s ease-out forwards;
-        }
-        @keyframes introTextReveal {
-            0% { opacity: 0; transform: translateY(20px); filter: blur(5px); }
-            50% { opacity: 1; transform: translateY(0); filter: blur(0); }
-            100% { opacity: 0; transform: translateY(-10px); filter: blur(5px); } 
-        }
-
-        #flash-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: #fff; opacity: 0; z-index: 10002; pointer-events: none;
-        }
-        .flash-trigger { animation: flashAnim 0.6s ease-out; }
-        @keyframes flashAnim { 0% { opacity: 0; } 20% { opacity: 1; } 100% { opacity: 0; } }
-
-        #main-site-content { opacity: 0; transition: opacity 1s ease-in; }
-
         @keyframes gradientMove {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
         }
 
+        /* --- NEW CINEMATIC PRE-LOADER STYLES --- */
+        #preloader {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: #050505; z-index: 10000; display: flex; justify-content: center;
+            align-items: center; overflow: hidden; flex-direction: column;
+        }
+        
+        .balloon {
+            position: absolute; bottom: -150px; font-size: 50px; opacity: 0.3; /* Lowered opacity so text stands out */
+            animation: balloonUp 5s ease-in forwards; z-index: 1;
+        }
+        @keyframes balloonUp {
+            0% { transform: translateY(0) rotate(0deg); opacity: 0.6; }
+            100% { transform: translateY(-120vh) rotate(20deg); opacity: 0; }
+        }
+
+        .preloader-text-container {
+            position: relative;
+            z-index: 10001;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        /* 1. Welcome Text Animation */
+        #preloader-welcome {
+            font-family: 'Playfair Display', serif;
+            font-size: 50px;
+            color: #ffffff;
+            opacity: 0;
+            letter-spacing: 15px;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
+            margin-left: 15px; /* offset for letter spacing centering */
+        }
+        .animate-welcome {
+            animation: cinematicWelcome 2.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+        }
+        @keyframes cinematicWelcome {
+            0% { opacity: 0; transform: scale(0.9); letter-spacing: 30px; filter: blur(10px); }
+            40% { opacity: 1; filter: blur(0px); text-shadow: 0 0 30px rgba(255, 255, 255, 0.8); }
+            100% { opacity: 1; transform: scale(1); letter-spacing: 12px; filter: blur(0px); text-shadow: 0 0 10px rgba(255, 255, 255, 0.3); }
+        }
+
+        /* 2. Subtext Animation */
+        #preloader-subtext {
+            font-size: 14px;
+            font-weight: 300;
+            color: var(--silver-dark);
+            text-transform: uppercase;
+            letter-spacing: 6px;
+            margin-top: 20px;
+            opacity: 0;
+            margin-left: 6px;
+        }
+        .animate-subtext {
+            animation: cinematicSubtext 1.5s ease-out forwards;
+        }
+        @keyframes cinematicSubtext {
+            0% { opacity: 0; transform: translateY(20px); filter: blur(4px); }
+            100% { opacity: 1; transform: translateY(0); filter: blur(0); }
+        }
+
+        /* The Flash Effect */
+        #flash-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: #fff; opacity: 0; z-index: 10002; pointer-events: none;
+        }
+        .flash-trigger { animation: flashAnim 0.8s ease-out; }
+        @keyframes flashAnim { 
+            0% { opacity: 0; } 
+            20% { opacity: 1; } 
+            100% { opacity: 0; } 
+        }
+
+        #main-site-content { opacity: 0; transition: opacity 1s ease-in; }
+
         /* --- LIGHT & ELEGANT MAGICAL SHOWER STYLES --- */
         .flower-container {
-            position: fixed; 
-            top: 0; left: 0; width: 100vw; height: 100vh;
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
             pointer-events: none; z-index: 9999; overflow: hidden;
         }
-        .flower, .sparkle { 
-            position: absolute; top: -50px; user-select: none; 
-            opacity: 0.6; 
-        }
+        .flower, .sparkle { position: absolute; top: -50px; user-select: none; opacity: 0.6; }
         .sparkle { color: #ffffff; }
 
         @keyframes fall {
@@ -138,8 +153,7 @@
             box-shadow: 0 5px 30px rgba(0, 0, 0, 0.5); overflow: hidden; 
         }
         header::after {
-            content: ''; position: absolute; bottom: 0; left: -100%;
-            width: 100%; height: 2px;
+            content: ''; position: absolute; bottom: 0; left: -100%; width: 100%; height: 2px;
             background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.8), transparent);
             animation: headerSweep 3.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
         }
@@ -160,14 +174,8 @@
         }
 
         /* --- BANNER STYLES --- */
-        .ad-space {
-            display: flex; align-items: center; justify-content: center;
-            border-radius: 12px; overflow: hidden;
-        }
-        .banner-img {
-            width: 100%; height: auto; border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); transition: transform 0.3s ease;
-        }
+        .ad-space { display: flex; align-items: center; justify-content: center; border-radius: 12px; overflow: hidden; }
+        .banner-img { width: 100%; height: auto; border-radius: 12px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); transition: transform 0.3s ease; }
         .banner-img:hover { transform: scale(1.02); }
         .ad-horizontal { width: 100%; max-width: 728px; margin: 10px auto 40px; z-index: 5; position: relative;}
         .content-area { display: flex; justify-content: center; flex-direction: column; align-items: center; }
@@ -176,59 +184,34 @@
         .glass-panel {
             position: relative; background: rgba(15, 15, 20, 0.55);
             backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-top: 1px solid rgba(255, 255, 255, 0.15);
-            border-left: 1px solid rgba(255, 255, 255, 0.15);
-            border-radius: 24px; padding: 50px 30px; text-align: center;
-            width: 100%; max-width: 650px; 
+            border: 1px solid rgba(255, 255, 255, 0.05); border-top: 1px solid rgba(255, 255, 255, 0.15);
+            border-left: 1px solid rgba(255, 255, 255, 0.15); border-radius: 24px; padding: 50px 30px; 
+            text-align: center; width: 100%; max-width: 650px; 
             box-shadow: 0 30px 60px rgba(0, 0, 0, 0.7), inset 0 0 20px rgba(255, 255, 255, 0.03);
             z-index: 5; overflow: hidden; 
         }
 
         .glass-panel::before, .glass-panel::after {
-            content: ''; position: absolute; border-radius: 50%;
-            filter: blur(60px); z-index: 0; pointer-events: none;
-            animation: auroraGlow 8s ease-in-out infinite alternate;
+            content: ''; position: absolute; border-radius: 50%; filter: blur(60px); 
+            z-index: 0; pointer-events: none; animation: auroraGlow 8s ease-in-out infinite alternate;
         }
-        .glass-panel::before {
-            width: 250px; height: 250px; background: rgba(255, 255, 255, 0.08);
-            top: -100px; left: -100px;
-        }
-        .glass-panel::after {
-            width: 300px; height: 300px; background: rgba(177, 185, 194, 0.06);
-            bottom: -150px; right: -100px; animation-delay: -4s;
-        }
-        @keyframes auroraGlow {
-            0% { transform: translate(0, 0) scale(1); }
-            100% { transform: translate(40px, 40px) scale(1.1); }
-        }
-
+        .glass-panel::before { width: 250px; height: 250px; background: rgba(255, 255, 255, 0.08); top: -100px; left: -100px; }
+        .glass-panel::after { width: 300px; height: 300px; background: rgba(177, 185, 194, 0.06); bottom: -150px; right: -100px; animation-delay: -4s; }
+        @keyframes auroraGlow { 0% { transform: translate(0, 0) scale(1); } 100% { transform: translate(40px, 40px) scale(1.1); } }
         .glass-panel > * { position: relative; z-index: 10; }
 
         /* --- POST-POPUP SPARKLE REVEAL FOR WELCOME TEXT --- */
         .welcome-text {
-            position: relative; z-index: 15; font-size: 15px;
-            color: var(--silver); text-transform: uppercase;
-            letter-spacing: 5px; margin-bottom: 15px; display: block; opacity: 0; 
-            font-weight: 600;
+            position: relative; z-index: 15; font-size: 15px; color: var(--silver); 
+            text-transform: uppercase; letter-spacing: 5px; margin-bottom: 15px; 
+            display: block; opacity: 0; font-weight: 600;
         }
-        .welcome-animate { 
-            animation: sparkleTextReveal 1.5s cubic-bezier(0.25, 1, 0.5, 1) forwards; 
-        }
+        .welcome-animate { animation: sparkleTextReveal 1.5s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
         
         @keyframes sparkleTextReveal {
-            0% { 
-                opacity: 0; transform: scale(0.5); letter-spacing: 20px; 
-                filter: blur(15px); text-shadow: 0 0 0px #fff; 
-            }
-            40% { 
-                opacity: 1; transform: scale(1.2); letter-spacing: 8px; 
-                filter: blur(0px); text-shadow: 0 0 30px #fff, 0 0 50px var(--silver); 
-            }
-            100% { 
-                opacity: 1; transform: scale(1); letter-spacing: 5px; 
-                filter: blur(0); text-shadow: 0 0 8px rgba(255,255,255,0.6); 
-            }
+            0% { opacity: 0; transform: scale(0.5); letter-spacing: 20px; filter: blur(15px); text-shadow: 0 0 0px #fff; }
+            40% { opacity: 1; transform: scale(1.2); letter-spacing: 8px; filter: blur(0px); text-shadow: 0 0 30px #fff, 0 0 50px var(--silver); }
+            100% { opacity: 1; transform: scale(1); letter-spacing: 5px; filter: blur(0); text-shadow: 0 0 8px rgba(255,255,255,0.6); }
         }
 
         h1 {
@@ -279,28 +262,10 @@
         .guide-box-text { color: var(--silver-dark); font-size: 13px; line-height: 1.5; }
         .guide-box-text strong { color: #ffffff; font-weight: 500; }
 
-        /* --- UPDATED: MASSIVE HERO BUTTON SECTION --- */
-        .action-buttons { 
-            display: flex; flex-direction: column; gap: 15px; 
-            align-items: center; margin-bottom: 30px; width: 100%; 
-            z-index: 20; position: relative; 
-        }
-
-        /* The pointing text above the button */
-        .click-here-pointer {
-            font-size: 15px;
-            font-weight: 600;
-            color: #ffffff;
-            animation: bouncePoint 1.5s infinite;
-            text-shadow: 0 0 10px rgba(255,255,255,0.5);
-            margin-bottom: 5px;
-        }
-
-        @keyframes bouncePoint {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(8px); }
-        }
-
+        /* --- HERO BUTTON SECTION --- */
+        .action-buttons { display: flex; flex-direction: column; gap: 15px; align-items: center; margin-bottom: 30px; width: 100%; z-index: 20; position: relative; }
+        .click-here-pointer { font-size: 15px; font-weight: 600; color: #ffffff; animation: bouncePoint 1.5s infinite; text-shadow: 0 0 10px rgba(255,255,255,0.5); margin-bottom: 5px; }
+        @keyframes bouncePoint { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(8px); } }
         @keyframes breathePulse {
             0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(224, 230, 237, 0.4); }
             50% { transform: scale(1.05); box-shadow: 0 0 20px 10px rgba(224, 230, 237, 0); }
@@ -309,92 +274,37 @@
 
         .hero-btn {
             display: flex; align-items: center; justify-content: center; gap: 12px;
-            background: linear-gradient(135deg, var(--silver), #ffffff);
-            color: #000000; font-weight: 700; font-size: 20px; /* Bigger Font */
-            padding: 22px 30px; /* Massive Padding */
-            border-radius: 16px; 
-            text-decoration: none; 
-            transition: all 0.3s;
-            animation: breathePulse 2.5s infinite ease-in-out; /* Smooth Breathe Animation */
-            width: 100%; max-width: 500px; /* Extra Wide */
-            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
-            border: 2px solid rgba(255,255,255,0.8);
+            background: linear-gradient(135deg, var(--silver), #ffffff); color: #000000; font-weight: 700; 
+            font-size: 20px; padding: 22px 30px; border-radius: 16px; text-decoration: none; 
+            transition: all 0.3s; animation: breathePulse 2.5s infinite ease-in-out; 
+            width: 100%; max-width: 500px; box-shadow: 0 15px 35px rgba(0,0,0,0.5); border: 2px solid rgba(255,255,255,0.8);
         }
-
         .hero-btn i { font-size: 24px; color: #000; }
         .hero-btn span:first-of-type { white-space: nowrap; }
-        
-        .hero-btn:hover { 
-            background: #ffffff; 
-            transform: scale(1.08) !important; /* Overrides the breathe pulse on hover */
-            box-shadow: 0 20px 40px rgba(255, 255, 255, 0.3); 
-        }
-        
-        .badge-recommended { 
-            background: #27ae60; color: white; font-size: 11px; 
-            padding: 5px 10px; border-radius: 20px; text-transform: uppercase; 
-            font-weight: 800; margin-left: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-        }
-        
+        .hero-btn:hover { background: #ffffff; transform: scale(1.08) !important; box-shadow: 0 20px 40px rgba(255, 255, 255, 0.3); }
+        .badge-recommended { background: #27ae60; color: white; font-size: 11px; padding: 5px 10px; border-radius: 20px; text-transform: uppercase; font-weight: 800; margin-left: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
         .btn-desc { font-size: 13px; color: var(--silver-dark); text-align: center; width: 100%; max-width: 450px; line-height: 1.5; font-weight: 500; }
 
         /* --- NEON SOCIAL BUTTONS CSS --- */
         .social-section { margin-top: 40px; padding-top: 30px; border-top: 1px solid rgba(255, 255, 255, 0.05); position: relative; z-index: 20;}
         .social-pitch { font-size: 13px; color: var(--text-dim); margin-bottom: 20px; }
         .social-buttons { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; }
-        
         .neon-btn {
-            display: inline-flex; align-items: center; gap: 8px; 
-            padding: 12px 25px; border-radius: 8px; text-decoration: none; 
-            font-size: 14px; font-weight: 600; letter-spacing: 1px;
-            text-transform: uppercase; transition: all 0.3s ease;
-            position: relative; overflow: hidden; background: transparent;
+            display: inline-flex; align-items: center; gap: 8px; padding: 12px 25px; border-radius: 8px; 
+            text-decoration: none; font-size: 14px; font-weight: 600; letter-spacing: 1px;
+            text-transform: uppercase; transition: all 0.3s ease; position: relative; overflow: hidden; background: transparent;
         }
-
-        .neon-yt {
-            color: #fff; border: 2px solid #ff0000;
-            box-shadow: inset 0 0 10px rgba(255,0,0,0.5), 0 0 15px rgba(255,0,0,0.5);
-            text-shadow: 0 0 5px #fff, 0 0 10px #ff0000;
-        }
+        .neon-yt { color: #fff; border: 2px solid #ff0000; box-shadow: inset 0 0 10px rgba(255,0,0,0.5), 0 0 15px rgba(255,0,0,0.5); text-shadow: 0 0 5px #fff, 0 0 10px #ff0000; }
         .neon-yt i { color: #ff0000; font-size: 18px; filter: drop-shadow(0 0 5px #ff0000); }
-        .neon-yt:hover {
-            background: rgba(255, 0, 0, 0.15);
-            box-shadow: inset 0 0 20px rgba(255,0,0,0.8), 0 0 30px rgba(255,0,0,0.8);
-            transform: translateY(-3px);
-        }
-
-        .neon-ig {
-            color: #fff; border: 2px solid #e1306c;
-            box-shadow: inset 0 0 10px rgba(225,48,108,0.5), 0 0 15px rgba(225,48,108,0.5);
-            text-shadow: 0 0 5px #fff, 0 0 10px #e1306c;
-        }
+        .neon-yt:hover { background: rgba(255, 0, 0, 0.15); box-shadow: inset 0 0 20px rgba(255,0,0,0.8), 0 0 30px rgba(255,0,0,0.8); transform: translateY(-3px); }
+        .neon-ig { color: #fff; border: 2px solid #e1306c; box-shadow: inset 0 0 10px rgba(225,48,108,0.5), 0 0 15px rgba(225,48,108,0.5); text-shadow: 0 0 5px #fff, 0 0 10px #e1306c; }
         .neon-ig i { color: #e1306c; font-size: 18px; filter: drop-shadow(0 0 5px #e1306c); }
-        .neon-ig:hover {
-            background: rgba(225, 48, 108, 0.15);
-            box-shadow: inset 0 0 20px rgba(225,48,108,0.8), 0 0 30px rgba(225,48,108,0.8);
-            transform: translateY(-3px);
-        }
+        .neon-ig:hover { background: rgba(225, 48, 108, 0.15); box-shadow: inset 0 0 20px rgba(225,48,108,0.8), 0 0 30px rgba(225,48,108,0.8); transform: translateY(-3px); }
 
         /* --- ANIMATED FOOTER --- */
-        footer { 
-            padding: 25px; text-align: center; font-size: 12px; color: #555; 
-            background: #000; margin-top: auto; 
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-            position: relative; overflow: hidden;
-        }
-        
-        .footer-brand-animated {
-            font-weight: 600;
-            background: linear-gradient(90deg, #555 0%, #d4af37 50%, #555 100%);
-            background-size: 200% auto;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: goldSweep 3s linear infinite;
-        }
-
-        @keyframes goldSweep {
-            to { background-position: 200% center; }
-        }
+        footer { padding: 25px; text-align: center; font-size: 12px; color: #555; background: #000; margin-top: auto; border-top: 1px solid rgba(255, 255, 255, 0.05); position: relative; overflow: hidden; }
+        .footer-brand-animated { font-weight: 600; background: linear-gradient(90deg, #555 0%, #d4af37 50%, #555 100%); background-size: 200% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent; animation: goldSweep 3s linear infinite; }
+        @keyframes goldSweep { to { background-position: 200% center; } }
 
         /* --- FULLSCREEN POPUP OVERLAY STYLES --- */
         #fullscreen-popup {
@@ -404,23 +314,16 @@
             opacity: 0; pointer-events: none; transition: opacity 0.5s ease;
         }
         .popup-show { opacity: 1 !important; pointer-events: auto !important; }
-        .popup-content {
-            width: 90%; max-width: 600px; transform: scale(0.8);
-            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            display: flex; flex-direction: column; border-radius: 12px;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9), 0 0 30px rgba(255, 255, 255, 0.15);
-        }
+        .popup-content { width: 90%; max-width: 600px; transform: scale(0.8); transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); display: flex; flex-direction: column; border-radius: 12px; box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9), 0 0 30px rgba(255, 255, 255, 0.15); }
         .popup-show .popup-content { transform: scale(1); }
-        .popup-countdown-strip {
-            background: #000; color: var(--silver-dark); font-size: 13px; text-align: center;
-            padding: 8px 0; font-weight: 500; border-top-left-radius: 12px; border-top-right-radius: 12px;
-            letter-spacing: 1px; border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
+        .popup-countdown-strip { background: #000; color: var(--silver-dark); font-size: 13px; text-align: center; padding: 8px 0; font-weight: 500; border-top-left-radius: 12px; border-top-right-radius: 12px; letter-spacing: 1px; border-bottom: 1px solid rgba(255, 255, 255, 0.1); }
         .popup-countdown-strip span { color: #fff; font-weight: 600; }
         .popup-img { width: 100%; height: auto; border-bottom-left-radius: 12px; border-bottom-right-radius: 12px; display: block; }
 
         @media (max-width: 480px) {
             h1 { font-size: 32px; }
+            #preloader-welcome { font-size: 38px; letter-spacing: 8px !important;}
+            #preloader-subtext { font-size: 12px; letter-spacing: 4px; }
             .hero-btn { font-size: 16px; padding: 18px 15px; gap: 8px; }
             .badge-recommended { font-size: 9px; padding: 4px 6px; }
             .social-buttons { flex-direction: column; width: 100%; align-items: center; }
@@ -440,8 +343,10 @@
     </div>
 
     <div id="preloader">
-        <div id="camera-wrap">📸</div>
-        <div id="intro-welcome">Dear Guest ,Download Your Pics</div>
+        <div class="preloader-text-container">
+            <div id="preloader-welcome">Welcome</div>
+            <div id="preloader-subtext">Dear Guest, Download Your Pics</div>
+        </div>
     </div>
     
     <div id="flash-overlay"></div>
@@ -530,8 +435,8 @@
         // --- MASTER TIMING LOGIC ---
         window.addEventListener('load', () => {
             const preloader = document.getElementById('preloader');
-            const camera = document.getElementById('camera-wrap');
-            const introWelcome = document.getElementById('intro-welcome');
+            const welcomeText = document.getElementById('preloader-welcome');
+            const subText = document.getElementById('preloader-subtext');
             const flash = document.getElementById('flash-overlay');
             const mainContent = document.getElementById('main-site-content');
             const welcomeGuest = document.getElementById('welcome-guest');
@@ -539,7 +444,7 @@
             const popupBanner = document.getElementById('fullscreen-popup');
             const popupTimer = document.getElementById('popup-timer');
 
-            // 1. Create Balloons
+            // 1. Create Balloons in the background of the preloader
             const colors = ['🎈', '🎈', '🎈', '🎈', '🎈'];
             for(let i=0; i<15; i++) {
                 setTimeout(() => {
@@ -552,13 +457,15 @@
                 }, i * 150);
             }
 
-            // 2. TIMING: 2.0s -> Show Camera & Intro Welcome Text
-            setTimeout(() => {
-                camera.classList.add('camera-active');
-                introWelcome.classList.add('intro-welcome-active');
-            },2000);
+            // 2. TIMING: 0s -> Trigger "Welcome" Animation
+            welcomeText.classList.add('animate-welcome');
 
-            // 3. TIMING: 3.5s -> Flash hits, reveal site, and trigger 7s Fullscreen Popup
+            // 3. TIMING: 1.0s -> Fade up "Dear Guest, Download Your Pics"
+            setTimeout(() => {
+                subText.classList.add('animate-subtext');
+            }, 1000);
+
+            // 4. TIMING: 4.0s -> Flash hits, reveal site, and trigger 7s Fullscreen Popup
             setTimeout(() => {
                 flash.classList.add('flash-trigger');
                 preloader.style.display = 'none';
@@ -573,25 +480,22 @@
                         timeLeft--;
                         popupTimer.textContent = timeLeft;
                         
-                        // 4. TIMING: Popup closes
+                        // 5. TIMING: Popup closes
                         if(timeLeft <= 0) {
                             clearInterval(countdown);
                             popupBanner.classList.remove('popup-show'); 
                             
-                            // 5. TIMING: EXACTLY when popup hides, explode the "Dear Guest ,Download Your Pics" sparkle! ✨
+                            // 6. TIMING: EXACTLY when popup hides, explode the sparkle text! ✨
                             setTimeout(() => {
                                 popupBanner.remove(); 
                                 document.body.style.overflow = 'auto'; 
-                                
-                                // TRIGGER SPARKLE TEXT REVEAL HERE
                                 welcomeGuest.classList.add('welcome-animate');
-                                
                             }, 500); 
                         }
                     }, 1000);
                 }, 400); 
 
-            }, 3500);
+            }, 4000); // 4 seconds gives the beautiful text enough time to be read
         });
 
         // --- MAGICAL FLOWER & SPARKLE SHOWERING SCRIPT ---
@@ -608,14 +512,12 @@
             if(isSparkle) {
                 el.innerHTML = sparkles[Math.floor(Math.random() * sparkles.length)];
                 el.style.fontSize = Math.random() * 6 + 6 + 'px'; 
-                
                 el.style.animation = `fall 5s linear forwards, blink 1s ease-in-out infinite`;
                 flowerZone.appendChild(el);
                 setTimeout(() => { el.remove(); }, 5000);
             } else {
                 el.innerHTML = flowers[Math.floor(Math.random() * flowers.length)];
                 el.style.fontSize = Math.random() * 8 + 10 + 'px'; 
-                
                 el.style.animation = `fall 5s linear forwards`;
                 flowerZone.appendChild(el);
                 setTimeout(() => { el.remove(); }, 5000);
