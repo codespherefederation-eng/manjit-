@@ -291,7 +291,22 @@
     .f-copy{font-size:12px;color:var(--dim)}
     .f-copy a{color:var(--gold);text-decoration:none}
     .f-tagline{font-size:11px;color:var(--dim);font-style:italic}
+<script>
+const btn = document.getElementById("nav-event-pill-btn");
+const sound = document.getElementById("clickSound");
 
+btn.addEventListener("click", function() {
+    
+    // Vibrate
+    if (navigator.vibrate) {
+        navigator.vibrate(50);
+    }
+
+    // Sound
+    sound.currentTime = 0;
+    sound.play();
+});
+</script>
   </style>
 </head>
 <body>
@@ -411,7 +426,7 @@
       <div class="reveal">
         <div class="who-logo-box">
           <div class="who-orbit"></div>
-          <div class="who-kp-inner">KAYDEE<br>PROD.</div>
+          <div class="who-kp-inner">Kaydee<br>Production</div>
         </div>
         <div class="who-stats">
           <div class="stat-card"><div class="stat-n">AI Powered</div><div class="stat-l">Stories That Stay With You</div></div>
